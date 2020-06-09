@@ -45,31 +45,46 @@ namespace PracticeTask9
         }
         public void Add(Point point)
         {
-            if (point.Number < list.Number)
+            if (list == null)
             {
-                Point current_point = this.list.Next;
-                Point previous_point = this.list;
-                for (int i = 1; i <= Length && current_point != null; i++)
-                {
-                    if (point.Number < previous_point.Number && point.Number > current_point.Number)
-                    {
-                        point.Next = current_point;
-                        previous_point.Next = point;
-                        Length++;
-                        break;
-                    }
-                    else
-                    {
-                        current_point = current_point.Next;
-                        previous_point = previous_point.Next;
-                    }
-                }
+                list = new Point();
+                list = point;
+                Length++;
             }
             else
             {
-                Add(point, list);
-                list = point;
-                Length++;
+                if (point.Number < list.Number)
+                {
+                    Point previous_point = this.list.Next;
+                    Point current_point = this.list;
+                    for (int i = 1; i <= Length && previous_point != null; i++)
+                    {
+                        if (point.Number < current_point.Number && point.Number > previous_point.Number)
+                        {
+                            point.Next = previous_point;
+                            current_point.Next = point;
+                            Length++;
+                            break;
+                        }
+                        if (previous_point.Next != null)
+                        {
+                            previous_point = previous_point.Next;
+                            current_point = current_point.Next;
+                        }
+                        else
+                        {
+                            previous_point.Next = point;
+                            Length++;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    Add(point, list);
+                    list = point;
+                    Length++;
+                }
             }
         }
         public bool Remove(Point point)
@@ -185,11 +200,11 @@ namespace PracticeTask9
         {
             string output = "Список:";
             Point current_point = list;
-            do
+            while(current_point != null)
             {
                 output += " " + current_point.Number.ToString();
                 current_point = current_point.Next;
-            } while (current_point != null);
+            }
             return output;
         }
     }
