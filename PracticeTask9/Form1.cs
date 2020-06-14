@@ -45,16 +45,17 @@ namespace PracticeTask9
 
         private void N_Input_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter) // Нажат энтер
             {
-                if (int.TryParse(N_Input.Text, out n))
+                if (int.TryParse(N_Input.Text, out n)) // Введено целое число
                 {
-                    if (n > 0 && n <= 20)
+                    if (n > 0 && n <= 20) // Число от 1 до 20
                     {
-                        Remove_All();
-                        list = new OneList(n);
-                        List_Output.Text = list.Show();
+                        Remove_All(); // Очистка формы
+                        list = new OneList(n); // Создание списка
+                        List_Output.Text = list.Show(); // Вывод списка
                         List_Output.Visible = true;
+                        // Доступны другие пункты меню
                         добавитьВСписокToolStripMenuItem.Enabled = true;
                         удалитьИзСпискаToolStripMenuItem.Enabled = true;
                         поискToolStripMenuItem.Enabled = true;
@@ -64,7 +65,7 @@ namespace PracticeTask9
                 else MessageBox.Show("Введите целое число!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        void Add_Attributes(int case_value)
+        void Add_Attributes(int case_value) // Создание элементов управления для интерфейса
         {
             Label Input_label = new Label()
             {
@@ -77,7 +78,7 @@ namespace PracticeTask9
                 Font = N_Input.Font
             };
             Controls.Add(Input_label);
-            TextBox Input_TextBox = new TextBox()
+            TextBox Input_TextBox = new TextBox() // Текстбокс для ввода
             {
                 Size = new Size(60, 50),
                 BackColor = Color.FromArgb(255, 245, 248),
@@ -87,7 +88,7 @@ namespace PracticeTask9
             Controls.Add(Input_TextBox);
             switch(case_value)
             {
-                case 0:
+                case 0: // Добавление в список
                     {
                         Input_label.Name = "Add_Label";
                         Input_TextBox.Name = "Add_TextBox";
@@ -97,7 +98,7 @@ namespace PracticeTask9
                         Add_TextBox = Input_TextBox;
                         break;
                     }
-                case 1:
+                case 1: // Удаление по значению
                     {
                         Input_label.Name = "Remove_Label";
                         Input_TextBox.Name = "Remove_TextBox";
@@ -107,7 +108,7 @@ namespace PracticeTask9
                         Remove_TextBox = Input_TextBox;
                         break;
                     }
-                case 2:
+                case 2: // Удаление по номеру
                     {
                         Input_label.Name = "Remove_Label";
                         Input_TextBox.Name = "Remove_TextBox";
@@ -117,7 +118,7 @@ namespace PracticeTask9
                         Remove_TextBox = Input_TextBox;
                         break;
                     }
-                case 3:
+                case 3: // Поиск по значению
                     {
                         Input_label.Name = "Search_Label";
                         Input_TextBox.Name = "Search_TextBox";
@@ -127,7 +128,7 @@ namespace PracticeTask9
                         Search_TextBox = Input_TextBox;
                         break;
                     }
-                case 4:
+                case 4: // Поиск по номеру
                     {
                         Input_label.Name = "Search_Label";
                         Input_TextBox.Name = "Search_TextBox";
@@ -141,7 +142,7 @@ namespace PracticeTask9
             Input_TextBox.Location = new System.Drawing.Point(Input_label.Location.X + Input_label.Width + 10, Input_label.Location.Y);
             Input_TextBox.Focus();
         }
-        void Remove_Labels(params Label[] labels)
+        void Remove_Labels(params Label[] labels) // Удаление всех меток с формы
         {
             for(int i = 0; i < labels.Length; i++)
             {
@@ -152,7 +153,7 @@ namespace PracticeTask9
                 }
             }
         }
-        void Remove_TextBoxes(params TextBox[] textboxes)
+        void Remove_TextBoxes(params TextBox[] textboxes) // Удаление всех текстбоксов с формы
         {
             for (int i = 0; i < textboxes.Length; i++)
             {
@@ -163,24 +164,24 @@ namespace PracticeTask9
                 }
             }
         }
-        void Remove_All()
-        {
+        void Remove_All() // Удаление меток и текстбоксов с формы
+        { 
             Remove_Labels(Add_label, Remove_Label, Search_Label);
             Remove_TextBoxes(Add_TextBox, Remove_TextBox, Search_TextBox);
         }
         private void Add_TextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter) // Нажат энтер
             {
                 int number = 0;
-                if (int.TryParse(Add_TextBox.Text, out number))
+                if (int.TryParse(Add_TextBox.Text, out number)) // Введено целое число
                 {
                     if (number >= 1)
                     {
-                        Point point = new Point(number);
-                        if (list.Search(point) == -1)
+                        Point point = new Point(number); // Создание элемента списка с информационным полем number
+                        if (list.Search(point) == -1) // Если такого элемента еще нет в списке
                         {
-                            list.Add(point);
+                            list.Add(point); // Добавление в список
                             List_Output.Text = list.Show();
                         }
                         else MessageBox.Show("Такое число уже добавлено в список!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -192,16 +193,16 @@ namespace PracticeTask9
         }
         private void Remove_TextBox1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter) // Нажат энтер
             {
                 int number = 0;
-                if (int.TryParse(Remove_TextBox.Text, out number))
+                if (int.TryParse(Remove_TextBox.Text, out number)) // Введено целое число
                 {
                     if (number >= 1)
                     {
-                        if (list != null)
+                        if (list != null) // Список не пустой
                         {
-                            Point point = new Point(number);
+                            Point point = new Point(number); // Создание элемента списка с информационным полем number
                             if (!list.Remove(point)) MessageBox.Show("Элемент для удаления не найден!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             else
                             {
@@ -243,14 +244,14 @@ namespace PracticeTask9
 
         private void Remove_TextBox2_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter) // Нажат энтер
             {
                 int number = 0;
-                if (int.TryParse(Remove_TextBox.Text, out number))
+                if (int.TryParse(Remove_TextBox.Text, out number)) // Введено целое число
                 {
                     if (number >= 1)
                     {
-                        if (list != null)
+                        if (list != null) // Список не пустой
                         {
                             if (!list.Remove(number)) MessageBox.Show("Элемент для удаления не найден!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             else
@@ -268,17 +269,17 @@ namespace PracticeTask9
         }
         private void Search_TextBox1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter) // Нажат энтер
             {
                 int number = 0;
-                if (int.TryParse(Search_TextBox.Text, out number))
+                if (int.TryParse(Search_TextBox.Text, out number)) // Введено целое число
                 {
                     if (number >= 1)
                     {
-                        if (list != null)
+                        if (list != null) // Список не пустой
                         {
-                            Point point = new Point(number);
-                            int index = list.Search(point);
+                            Point point = new Point(number); // Создание элемента списка с информационным полем number
+                            int index = list.Search(point); // Поиск по значению
                             if (index == -1) MessageBox.Show("Элемент не найден!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             else MessageBox.Show($"Индекс искомого элемента: {index}", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
@@ -291,16 +292,16 @@ namespace PracticeTask9
         }
         private void Search_TextBox2_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter) // Нажат энтер
             {
                 int number = 0;
-                if (int.TryParse(Search_TextBox.Text, out number))
+                if (int.TryParse(Search_TextBox.Text, out number)) // Введено целое число
                 {
                     if (number >= 1)
                     {
-                        if (list != null)
+                        if (list != null) // Список не пустой
                         {
-                            Point point = list.Search(number);
+                            Point point = list.Search(number); // Поиск по номеру
                             if (point == null) MessageBox.Show("Элемент не найден!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             else MessageBox.Show($"Искомый элемент: {point.Number}", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }

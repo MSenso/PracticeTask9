@@ -8,14 +8,9 @@ namespace PracticeTask9
 {
     public class Point
     {
-        public int Number { get; set; }
-        public Point Next;
-        public Point()
-        {
-            Number = 1;
-            Next = null;
-        }
-        public Point(int number)
+        public int Number { get; set; } // Информационное поле – число
+        public Point Next; // Адресное поле – ссылка на следующий элемент
+        public Point(int number) // Создание элемента списка
         {
             Number = number;
             Next = null;
